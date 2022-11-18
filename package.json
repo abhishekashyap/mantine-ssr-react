@@ -13,6 +13,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@mantine/core": "^5.8.0",
+    "@mantine/ssr": "^5.8.0",
     "esbuild": "^0.15.14",
     "express": "^4.18.2",
     "react": "^18.2.0",
