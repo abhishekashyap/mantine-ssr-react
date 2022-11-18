@@ -1,4 +1,4 @@
-import { Button, MantineProvider } from "@mantine/core";
+import { Button, MantineProvider, Anchor } from "@mantine/core";
 import React, { useState } from "react";
 
 export default function App() {
@@ -11,6 +11,8 @@ export default function App() {
     >
       <div>Count: {counter}</div>
       <Button onClick={() => setCounter((count) => count + 1)}>Add one</Button>
+      <br />
+      <Anchor href="/about">Navigate to about</Anchor>
     </MantineProvider>
   );
 }

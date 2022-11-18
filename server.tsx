@@ -2,12 +2,12 @@ import path from "path";
 import fs from "fs";
 
 import React from "react";
-import { renderToString, renderToStaticMarkup } from "react-dom/server";
+import { renderToString } from "react-dom/server";
 import express from "express";
 import { createStylesServer, ServerStyles } from "@mantine/ssr";
 
 import App from "./src/App";
-import Html from "./src/Html";
+import About from "./src/About";
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -34,6 +34,32 @@ app.get("/", (_, res) => {
     const updatedDataWithContent = updatedDataWithStyles.replace(
       '<div id="root"></div>',
       `<div id="root">${content}</div>`
+    );
+
+    return res.send(updatedDataWithContent);
+  });
+});
+
+app.get("/about", (_, res) => {
+  fs.readFile(path.resolve("./public/about.html"), "utf8", (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send("An error occurred");
+    }
+
+    const content = renderToString(<About />);
+    const styles = renderToString(
+      <ServerStyles html={content} server={stylesServer} />
+    );
+
+    const updatedDataWithStyles = data.replace(
+      "<styles>stylesGoHere</styles>",
+      styles
+    );
+
+    const updatedDataWithContent = updatedDataWithStyles.replace(
+      '<div id="about"></div>',
+      `<div id="about">${content}</div>`
     );
 
     return res.send(updatedDataWithContent);
